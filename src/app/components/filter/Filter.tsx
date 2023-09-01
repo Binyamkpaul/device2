@@ -5,7 +5,6 @@ const Filter = () => {
   const [filter1, setFilter1] = useState("");
   const [filter2, setFilter2] = useState("");
   const [filter3, setFilter3] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here
