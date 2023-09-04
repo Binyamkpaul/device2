@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 import React from "react";
-import { useGetAllDevices } from "./devices.query";
-import StepList from "../components/steps/StepList";
+import { useGetDevices } from "./devices.query";
+import StepList from "../steps/StepList";
 import { useRouter } from "next/router";
 import {
   AiFillCalendar,
@@ -18,8 +18,7 @@ const DeviceList = () => {
     return "/the";
   };
 
-  const devicesQuery = useGetAllDevices();
-  console.log({ devicesQuery, data: devicesQuery.data });
+  const devicesQuery = useGetDevices();
 
   if (devicesQuery.isError) {
     return <div>Error..</div>;

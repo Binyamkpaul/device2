@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    domains: ["simulator-devicecare.etisalat.ae"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
