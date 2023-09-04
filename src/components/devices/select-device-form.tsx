@@ -1,13 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import {
-  useGetBrandsByDeviceId,
-  useGetDeviceByDeviceTypeQuery,
+  useGetBrandsByDeviceIdQuery,
   useGetDevices,
-  useGetModelsByBrandId,
-} from "../devices/devices.query";
+  useGetModelsByBrandIdQuery,
+  useGetModelsByDeviceIdQuery,
+} from "./devices.react.query";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import { useGetBrandByIdQuery } from "./brands.react.query";
+import { GuideList } from "@/app/guides/GuideList";
 
 export function SelectDeviceForm() {
   const {
@@ -18,18 +20,21 @@ export function SelectDeviceForm() {
   } = useForm({
     defaultValues: {
       deviceId: undefined,
-      brand: undefined,
+      brandId: undefined,
       modelId: undefined,
     },
   });
 
   const { data: devices } = useGetDevices();
   const deviceId = watch("deviceId");
-  const brand = watch("brand");
-  //   const { data: brands } = useGetBrandsByDeviceId(deviceId);
-  const { data: models } = useGetModelsByBrandId(brand);
-  const { data: brands } = useGetDeviceByDeviceTypeQuery("ADSL");
-  console.log({ models, brand });
+  const brandId = watch("brandId");
+  const modelId = watch("modelId");
+  // const { data: brands } = useGetDeviceByDeviceTypeQuery("Fixed Broadband");
+  const { data: models } = useGetModelsByBrandIdQuery(brandId);
+  const { data: deviceDataById } = useGetBrandsByDeviceIdQuery(deviceId ?? 0);
+  const { data: brandsDataById } = useGetBrandByIdQuery(brandId ?? 0);
+  // console.log({ brandsData: deviceDataById, deviceId });
+  console.log({ brandId, deviceId, brandsDataById });
   const onSubmit = (data: any) => console.log(data);
 
   return (
@@ -52,28 +57,30 @@ export function SelectDeviceForm() {
               {...register("deviceId")}
               className="px-4 py-2 border border-gray-300 rounded-md"
             >
-              <option value="">Select device</option>
+              <option value="">Select</option>
               {devices?.map((device: any) => (
-                <option key={device.id} value={device.attributes.type}>
-                  {device.attributes.type}
+                <option key={device.id} value={device.id}>
+                  {device.attributes.name}
                 </option>
               ))}
             </select>
           </div>
           <div>
-            <label htmlFor="brand" className="block mb-2">
+            <label htmlFor="brandId" className="block mb-2">
               Brand
             </label>
             <select
-              {...register("brand")}
+              {...register("brandId")}
               className="px-4 py-2 border border-gray-300 rounded-md"
             >
               <option value="">Select brand</option>
-              {brands?.map((brand: any) => (
-                <option key={brand.id} value={brand.attributes.brand}>
-                  {brand.attributes.brand}
-                </option>
-              ))}
+              {deviceDataById?.data?.attributes?.brands?.data.map(
+                (brand: any) => (
+                  <option key={brand.id} value={brand.id}>
+                    {brand?.attributes?.name}
+                  </option>
+                )
+              )}
             </select>
           </div>
           <div>
@@ -84,12 +91,14 @@ export function SelectDeviceForm() {
               {...register("modelId")}
               className="px-4 py-2 border border-gray-300 rounded-md"
             >
-              <option value="">Select Model</option>
-              {models?.map((model: any) => (
-                <option key={model.id} value={model.attributes.model}>
-                  {model.attributes.model}
-                </option>
-              ))}
+              <option value="">Select brand</option>
+              {brandsDataById?.data?.attributes?.models?.data?.map(
+                (model: any) => (
+                  <option key={model.id} value={model.id}>
+                    {model?.attributes?.name}
+                  </option>
+                )
+              )}
             </select>
           </div>
         </div>
@@ -101,6 +110,7 @@ export function SelectDeviceForm() {
           Submit
         </button>
       </form>
+      {/* <GuideList id={modelId ?? 0} /> */}
     </div>
   );
 }
