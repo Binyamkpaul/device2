@@ -88,12 +88,12 @@ export default function Navbar() {
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 ">
                 <li className="text-dark">
-                  <Link href="/"> telebirr</Link>
+                  <Link href="/"> Mobile</Link>
                 </li>
                 <li className="text-dark">
-                  <Link href="/blogs">Cloud Solutions</Link>
+                  <Link href="/blogs">Home</Link>
                 </li>
-                <li className="text-dark">
+                {/* <li className="text-dark">
                   <Link href="/blogs"> Online Service</Link>
                 </li>
                 <li className="text-dark">
@@ -110,7 +110,7 @@ export default function Navbar() {
                 </li>
                 <li className="text-dark">
                   <Link href="/contact">Company</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             {/* <nav className="pt-50 mt-11 flex gap-8">

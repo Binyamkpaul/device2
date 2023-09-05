@@ -1,72 +1,48 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
-import React, { useState } from "react";
-import { useGetAllresponses } from "./steps.quey";
+const faqs = [
+  {
+    question: "How do you make holy water?",
+    answer:
+      "You boil the hell out of it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+  },
+  // More questions...
+];
 
-const StepList = () => {
-  const listQuery = useGetAllresponses();
-  console.log({ listQuery, data: listQuery.data });
-
-  if (listQuery.isError) {
-    return <div>Error..</div>;
-  }
-  if (listQuery.isLoading || listQuery.isFetching) {
-    return <div>Loading..</div>;
-  }
-
-  const Steps = () => {
-    const [filter1, setFilter1] = useState("");
-    const [filter2, setFilter2] = useState("");
-    const [filter3, setFilter3] = useState("");
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      // Handle form submission here
-    };
-
-    return (
-      <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-        {listQuery.data?.map((response) => (
-          <div key={response.id} className="group relative">
-            <div className="flex flex-col items-center">
-              <img
-                src="https://simulator-devicecare.etisalat.ae/WebApp/img/Smartphones-Laptops.jpg"
-                alt="Device"
-                className="w-64 h-auto"
-              />
-
-              <form
-                onSubmit={handleSubmit}
-                className="flex justify-center mt-4 space-x-4"
+export default function Example() {
+  return (
+    <div className="bg-white">
+      <div className="mx-auto max-w-7xl px-6 py-24 sm:pt-32 lg:px-8 lg:py-40">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <h2 className="text-2xl font-bold leading-10 tracking-tight text-gray-900">
+              Frequently asked questions
+            </h2>
+            <p className="mt-4 text-base leading-7 text-gray-600">
+              Can’t find the answer you’re looking for? Reach out to our{" "}
+              <a
+                href="#"
+                className="font-semibold text-indigo-600 hover:text-indigo-500"
               >
-                <select
-                  value={filter1}
-                  onChange={(e) => setFilter1(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-md"
-                >
-                  <option value="">Select Filter 1</option>
-                  <option value="option1">{response.attributes.StepNum}</option>
-                  <option value="option2">
-                    {response.attributes.stepDescription}
-                  </option>
-                  <option value="option3">Option 3</option>
-                </select>
-
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-white bg-blue-500 rounded-md"
-                >
-                  Submit
-                </button>
-              </form>
-            </div>
+                customer support
+              </a>{" "}
+              team.
+            </p>
           </div>
-        ))}
+          <div className="mt-10 lg:col-span-7 lg:mt-0">
+            <dl className="space-y-10">
+              {faqs.map((faq) => (
+                <div key={faq.question}>
+                  <dt className="text-base font-semibold leading-7 text-gray-900">
+                    {faq.question}
+                  </dt>
+                  <dd className="mt-2 text-base leading-7 text-gray-600">
+                    {faq.answer}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
       </div>
-    );
-  };
-
-  return <Steps />;
-};
-
-export default StepList;
+    </div>
+  );
+}

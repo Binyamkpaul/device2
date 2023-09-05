@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 "use client";
 import React from "react";
-import { useGetDevices } from "./devices.query";
+import { useGetDevices } from "./devices.react.query";
 import StepList from "../steps/StepList";
 import { useRouter } from "next/router";
 import {
@@ -12,6 +12,7 @@ import {
 } from "react-icons/ai";
 import { HiMiniDeviceTablet } from "react-icons/hi2";
 import { TbBrandAsana } from "react-icons/tb";
+import { GuideList } from "@/app/guides/GuideList";
 
 const DeviceList = () => {
   const handleRedirect = () => {
@@ -24,7 +25,15 @@ const DeviceList = () => {
     return <div>Error..</div>;
   }
   if (devicesQuery.isLoading || devicesQuery.isFetching) {
-    return <div>Loading..</div>;
+    return (
+      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center">
+        <div className="flex space-x-2">
+          <div className="w-4 h-4 bg-gray-900 rounded-full animate-bounce"></div>
+          <div className="w-4 h-4 bg-gray-900 rounded-full animate-bounce"></div>
+          <div className="w-4 h-4 bg-gray-900 rounded-full animate-bounce"></div>
+        </div>
+      </div>
+    );
   }
 
   if (devicesQuery.isSuccess)
@@ -42,11 +51,11 @@ const DeviceList = () => {
                   onClick={handleRedirect}
                   className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
                 >
-                  {device?.attributes?.ico?.data?.attributes?.url && (
+                  {device?.attributes?.icon?.data?.attributes?.url && (
                     <img
                       src={
                         "http://127.0.0.1:1337" +
-                        device?.attributes?.ico?.data?.attributes?.url
+                        device?.attributes?.icon?.data?.attributes?.url
                       }
                       className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                     />
@@ -62,7 +71,7 @@ const DeviceList = () => {
                   <dd className="text-sm font-medium leading-6 text-gray-900">
                     <a href={device.href}>
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {device.attributes.type}
+                      {device.attributes.name}
                     </a>
                   </dd>
                 </div>
@@ -105,6 +114,7 @@ const DeviceList = () => {
                   </p>
                 </div>
                 {/* <StepList /> */}
+                {/* <GuideList id={modelId ?? 0} /> */}
               </div>
             ))}
           </div>

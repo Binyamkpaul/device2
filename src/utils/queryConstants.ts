@@ -2,5 +2,7 @@ export const queryKeys = {
   devices: "devices",
   brands: "brands",
   models: "models",
-  responses: "responses",
+  guides: "guides",
+  steps: "steps",
+  catagories: "catagories",
 };
