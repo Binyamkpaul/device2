@@ -3,6 +3,7 @@ import { selectedModelAtom } from "@/store";
 import { useAtomValue } from "jotai";
 import React from "react";
 import { useGetGuidesByModelIdQuery } from "./api-queries";
+import GuideItem from "./guide-item";
 
 export default function GuidesList() {
   const selectedModel = useAtomValue(selectedModelAtom);
@@ -10,21 +11,9 @@ export default function GuidesList() {
 
   return (
     <div>
-      {guides && Array.isArray(guides) ? (
-        guides.map((guide: any) => (
-          <div key={guide.id}>
-            {guide.categories && Array.isArray(guide.categories) ? (
-              guide.categories.map((category: any) => (
-                <div key={category.id}>{category.name}</div>
-              ))
-            ) : (
-              <div>No categories available.</div>
-            )}
-          </div>
-        ))
-      ) : (
-        <div>No guides available.</div>
-      )}
+      {guides?.map((guide: any) => (
+        <GuideItem key={guide.id} guide={guide} />
+      ))}
     </div>
   );
 }

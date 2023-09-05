@@ -2,7 +2,7 @@ import { queryKeys } from "@/utils/queryConstants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "@/utils";
 
-// All devices
+// All Devices
 export const useGetDevices = () =>
   useQuery({
     queryKey: [queryKeys.devices],
@@ -56,14 +56,4 @@ export const useGetStepsByGuideIdQuery = (guideId?: number) =>
       return data?.data?.attributes?.steps?.data;
     },
     enabled: !!guideId,
-  });
-// Feaching Catagories
-export const useGetcatagoriesByModelIdQuery = (modelId?: number) =>
-  useQuery({
-    queryKey: [queryKeys.catagories, modelId],
-    queryFn: async () => {
-      const { data } = await axios.get(`/guides/${modelId}?populate=steps`);
-      return data?.data?.attributes?.steps?.data;
-    },
-    enabled: !!modelId,
   });

@@ -21,7 +21,7 @@ export default function Home() {
         {title}
       </h2>
       <SelectDeviceForm />
-      {/* <GuidesCategories /> */}
+      <GuidesCategories />
       <GuidesList />
 
       {/* <AppScree-n /> */}
