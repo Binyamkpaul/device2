@@ -1,6 +1,7 @@
 import { queryKeys } from "@/utils/queryConstants";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "@/utils";
+import _ from "lodash";
 
 // All Devices
 export const useGetDevices = () =>
@@ -11,6 +12,10 @@ export const useGetDevices = () =>
       return data?.data;
     },
   });
+// Device Post method
+// export const useCreateDevice = () => {
+//   return useMutation((deviceData) => axios.post("/devices", deviceData));
+// };
 
 // Brands per device
 export const useGetBrandsByDeviceIdQuery = (deviceId?: number) =>
@@ -41,8 +46,9 @@ export const useGetGuidesByModelIdQuery = (modelId?: number) =>
     queryKey: [queryKeys.guides, modelId],
     queryFn: async () => {
       const { data } = await axios.get(`/models/${modelId}?populate=guides`);
-      console.log("🚀 ~ file: api-queries.ts:45 ~ queryFn: ~ data:", data);
-      return data?.data?.attributes?.guides?.data;
+      const guides = data?.data?.attributes?.guides?.data ?? [];
+      const categories = _.chain(guides).groupBy("attributes.category").value();
+      return { guides, categories };
     },
     enabled: !!modelId,
   });
@@ -52,7 +58,9 @@ export const useGetStepsByGuideIdQuery = (guideId?: number) =>
   useQuery({
     queryKey: [queryKeys.steps, guideId],
     queryFn: async () => {
-      const { data } = await axios.get(`/guides/${guideId}?populate=steps`);
+      const { data } = await axios.get(
+        `/guides/${guideId}?populate=steps.screenshot.media`
+      );
       return data?.data?.attributes?.steps?.data;
     },
     enabled: !!guideId,
