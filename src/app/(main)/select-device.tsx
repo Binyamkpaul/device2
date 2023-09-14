@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
@@ -29,10 +28,7 @@ export function SelectDeviceForm() {
   const deviceId = watch("deviceId");
   const brandId = watch("brandId");
   const modelId = watch("modelId");
-  console.log(
-    "🚀 ~ file: select-device.tsx:32 ~ SelectDeviceForm ~ modelId:",
-    modelId
-  );
+
   const { data: brands } = useGetBrandsByDeviceIdQuery(deviceId);
   const { data: models } = useGetModelsByBrandIdQuery(brandId);
 
@@ -42,27 +38,28 @@ export function SelectDeviceForm() {
 
   return (
     <>
-      <div className="mt-6 flex justify-center space-x-4">
+      <div className="mt-6 flex justify-center space-x-4 mr-16">
         <div className="hidden sm:block">
           <Image
-            src="https://www.ethiotelecom.et/wp-content/uploads/2022/04/SLT869-A51-300x176.jpg"
+            src="https://m.media-amazon.com/images/I/416hJsPKR3L.jpg"
             alt="Device"
             height={300}
             width={300}
-            className="w-64 h-auto"
+            className="w-64 h-auto ps-14"
           />
         </div>
         <form className="mt-4 space-y-4">
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
-              <label htmlFor="deviceId" className="block mb-2">
-                Device
+              <label htmlFor="deviceId" className="block mb-2  text-gray-500">
+                Device Typez
               </label>
               <select
                 {...register("deviceId")}
-                className="px-4 py-2 border border-gray-300 rounded-md"
+                id="deviceId"
+                className="form-select mt-4 space-y-4 rounded border border-gray-400"
               >
-                <option value="">Select</option>
+                <option value="">Select Device</option>
                 {devices?.map((device: any) => (
                   <option key={device.id} value={device.id}>
                     {device.attributes.name}
@@ -71,12 +68,13 @@ export function SelectDeviceForm() {
               </select>
             </div>
             <div>
-              <label htmlFor="brandId" className="block mb-2">
+              <label htmlFor="brandId" className="block mb-2  text-gray-500">
                 Brand
               </label>
               <select
                 {...register("brandId")}
-                className="px-4 py-2 border border-gray-300 rounded-md"
+                id="brandId"
+                className="form-select mt-4 space-y-4 rounded border border-gray-400"
               >
                 <option value="">Select brand</option>
                 {brands?.map((brand: any) => (
@@ -87,14 +85,15 @@ export function SelectDeviceForm() {
               </select>
             </div>
             <div>
-              <label htmlFor="modelId" className="block mb-2">
+              <label htmlFor="modelId" className="block mb-2  text-gray-500">
                 Model
               </label>
               <select
                 {...register("modelId")}
-                className="px-4 py-2 border border-gray-300 rounded-md"
+                id="modelId"
+                className="form-select mt-4 space-y-4 rounded border border-gray-400"
               >
-                <option value="">Select brand</option>
+                <option value="">Select model</option>
                 {models?.map((model: any) => (
                   <option key={model.id} value={model.id}>
                     {model?.attributes?.name}
