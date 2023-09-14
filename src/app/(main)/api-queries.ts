@@ -1,7 +1,23 @@
 import { queryKeys } from "@/utils/queryConstants";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryCache,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import axios from "@/utils";
 import _ from "lodash";
+
+interface Rating {
+  id: number;
+  ratingValue: number;
+  comment: string;
+  guidesId?: number[];
+  isHelpful: boolean;
+  ces: number;
+  csat: number;
+  nps: number;
+}
 
 // All Devices
 export const useGetDevices = () =>
@@ -12,10 +28,6 @@ export const useGetDevices = () =>
       return data?.data;
     },
   });
-// Device Post method
-// export const useCreateDevice = () => {
-//   return useMutation((deviceData) => axios.post("/devices", deviceData));
-// };
 
 // Brands per device
 export const useGetBrandsByDeviceIdQuery = (deviceId?: number) =>
@@ -64,4 +76,117 @@ export const useGetStepsByGuideIdQuery = (guideId?: number) =>
       return data?.data?.attributes?.steps?.data;
     },
     enabled: !!guideId,
+  });
+
+//All models
+export const useGetModels = () =>
+  useQuery({
+    queryKey: [queryKeys.models],
+    queryFn: async () => {
+      const { data } = await axios.get("/models");
+      return data?.data;
+    },
+  });
+// all rating
+export const useGetRatingsByGuideIdQuery = (guideId?: number) =>
+  useQuery({
+    queryKey: ["ratings", guideId],
+    queryFn: async () => {
+      const { data } = await axios.get(`/guides/${guideId}?populate=ratings`);
+      return data?.data?.attributes?.ratings?.data;
+    },
+    enabled: !!guideId,
+  });
+//post method
+
+export const useSubmitRatingMutation = () => {
+  return useMutation(
+    async ({ guideId, rating }: { guideId: number; rating: Rating }) => {
+      const { ratingValue, comment, isHelpful, ces, csat, nps } = rating;
+
+      const response = await axios.post("/ratings", {
+        data: {
+          guide: guideId,
+          rating: {
+            ratingValue: ratingValue,
+            comment: comment,
+            isHelpful: isHelpful,
+            ces: ces,
+            csat: csat,
+            nps: nps,
+          },
+        },
+      });
+      return response.data;
+    }
+  );
+};
+// export const useSubmitRatingMutation = () => {
+//   return useMutation(
+//     async ({
+//       guideId,
+//       ces,
+//       csat,
+//       nps,
+//     }: {
+//       guideId: number;
+//       ces: number;
+//       csat: number;
+//       nps: number;
+//     }) => {
+//       try {
+//         const response = await axios.post("/ratings", {
+//           guideId: guideId,
+//           ces: ces,
+//           csat: csat,
+//           nps: nps,
+//         });
+
+//         return response.data;
+//       } catch (error) {
+//         throw new Error("Error submitting rating");
+//       }
+//     }
+//   );
+// };
+//lattest devices
+
+// export const useLattesModels = () => {
+//   const queryClient = useQueryClient();
+
+//   return useQuery(
+//     ["models"],
+//     async () => {
+//       const { data } = await axios.get("/models");
+//       const devices = data?.data || [];
+
+//       // Filter devices with favorite selection of "yes"
+//       const favoriteDevices = devices.filter(
+//         (models: { favorite: any }) => models.attributes.favorite === "yes"
+//       );
+
+//       return favoriteDevices;
+//     },
+//     {
+//       onSuccess: (data) => {
+//         queryClient.setQueryData("models", data);
+//       },
+//     }
+//   );
+// };
+export const useLattesModels = () =>
+  useQuery({
+    queryKey: [queryKeys.models],
+    queryFn: async () => {
+      const { data } = await axios.get("/models", {
+        params: {
+          _where: {
+            favorite: "yes",
+          },
+        },
+      });
+      const models = data?.data || [];
+
+      return models;
+    },
   });

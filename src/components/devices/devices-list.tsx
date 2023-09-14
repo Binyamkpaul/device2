@@ -13,13 +13,14 @@ import {
 import { HiMiniDeviceTablet } from "react-icons/hi2";
 import { TbBrandAsana } from "react-icons/tb";
 import { GuideList } from "@/app/guides/GuideList";
+import { useGetModels } from "@/app/(main)/api-queries";
 
 const DeviceList = () => {
   const handleRedirect = () => {
     return "/the";
   };
 
-  const devicesQuery = useGetDevices();
+  const devicesQuery = useGetModels();
 
   if (devicesQuery.isError) {
     return <div>Error..</div>;
@@ -41,25 +42,25 @@ const DeviceList = () => {
       <div className="bg-white">
         <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Device lists
+            Lattest Device lists
           </h2>
 
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {devicesQuery.data?.map((device: any) => (
-              <div key={device.id} className="group relative">
+            {devicesQuery.data?.map((model: any) => (
+              <div key={model.id} className="group relative">
                 <div
                   onClick={handleRedirect}
                   className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
                 >
-                  {device?.attributes?.icon?.data?.attributes?.url && (
+                  {/* {model?.attributes?.icon?.data?.attributes?.url && (
                     <img
                       src={
                         "http://127.0.0.1:1337" +
-                        device?.attributes?.icon?.data?.attributes?.url
+                        model?.attributes?.icon?.data?.attributes?.url
                       }
                       className="h-full w-full object-cover object-center lg:h-full lg:w-full"
                     />
-                  )}
+                  )} */}
                 </div>
                 <div className="mt-6 flex w-full flex-none gap-x-4 border-t border-gray-900/5 px-6 pt-6">
                   <dt className="flex-none">
@@ -69,9 +70,9 @@ const DeviceList = () => {
                     />
                   </dt>
                   <dd className="text-sm font-medium leading-6 text-gray-900">
-                    <a href={device.href}>
+                    <a href={model.href}>
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {device.attributes.name}
+                      {model.attributes.name}
                     </a>
                   </dd>
                 </div>
@@ -84,9 +85,9 @@ const DeviceList = () => {
                   </dt>
                   <dd className="text-sm leading-6 text-gray-500">
                     <dd className="text-sm font-medium leading-6 text-gray-900">
-                      <a href={device.href}>
+                      <a href={model.href}>
                         <span aria-hidden="true" className="absolute inset-0" />
-                        {device.attributes.brand}
+                        {/* {model.attributes.id} */}
                       </a>
                     </dd>
                   </dd>
@@ -101,7 +102,7 @@ const DeviceList = () => {
                   </dt>
                   <dd className="text-sm leading-6 text-gray-500">
                     <p className="mt-1 text-sm text-gray-500">
-                      {device.attributes.model}
+                      {/* {device.attributes.model} */}
                     </p>
                   </dd>
                 </div>
@@ -110,7 +111,7 @@ const DeviceList = () => {
                     <h3 className="text-sm text-gray-700"></h3>
                   </div>
                   <p className="text-sm font-large text-gray-900">
-                    {device.price}
+                    {/* {device.price} */}
                   </p>
                 </div>
                 {/* <StepList /> */}
