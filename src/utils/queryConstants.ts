@@ -12,4 +12,5 @@ export const queryKeys = {
   ces: "ces",
   csat: "csat",
   nps: "nps",
+  relevant: "relevant",
 };

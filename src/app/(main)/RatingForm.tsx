@@ -1,52 +1,51 @@
 import React, { useState } from "react";
 import { useSubmitRatingMutation } from "./api-queries";
-
-interface Rating {
-  ces: number;
-  csat: number;
-  nps: number;
-  relevant: boolean;
-}
-
+// interface Rating {
+//   ces: number;
+//   csat: number;
+//   nps: number;
+//   relevant: boolean;
+// }
 interface RatingFormProps {
-  guideId: string;
+  guideId: number;
+  modelId: number;
 }
 
 enum RatingStep {
-  CES,
-  CSAT,
-  NPS,
-  RELEVANT,
+  ces,
+  csat,
+  nps,
+  relevant,
 }
 
-const RatingForm: React.FC<RatingFormProps> = ({ guideId }) => {
+const RatingForm: React.FC<RatingFormProps> = ({ guideId, modelId }) => {
   const [cesRating, setCesRating] = useState<number | null>(null);
   const [csatRating, setCsatRating] = useState<number | null>(null);
   const [npsRating, setNpsRating] = useState<number | null>(null);
   const [relevant, setRelevant] = useState<boolean | null>(null);
-  const [currentStep, setCurrentStep] = useState<RatingStep>(RatingStep.CES);
+  const [currentStep, setCurrentStep] = useState<RatingStep>(RatingStep.ces);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const submitRatingMutation = useSubmitRatingMutation();
 
   const handleNextStep = () => {
-    if (currentStep === RatingStep.CES) {
+    if (currentStep === RatingStep.ces) {
       if (cesRating !== null) {
-        setCurrentStep(RatingStep.CSAT);
+        setCurrentStep(RatingStep.csat);
       } else {
-        // Display an error message or handle the validation error
+        alert("you need to sumbmit the first Step");
       }
-    } else if (currentStep === RatingStep.CSAT) {
+    } else if (currentStep === RatingStep.csat) {
       if (csatRating !== null) {
-        setCurrentStep(RatingStep.NPS);
+        setCurrentStep(RatingStep.nps);
       } else {
-        // Display an error message or handle the validation error
+        alert("you need to sumbmit the Second  Step");
       }
-    } else if (currentStep === RatingStep.NPS) {
+    } else if (currentStep === RatingStep.nps) {
       if (npsRating !== null) {
-        setCurrentStep(RatingStep.RELEVANT);
+        setCurrentStep(RatingStep.relevant);
       } else {
-        // Display an error message or handle the validation error
+        alert("you need to sumbmit the last Step");
       }
     } else {
       handleSubmit();
@@ -54,14 +53,13 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId }) => {
   };
 
   const handleSubmit = async () => {
-    // Validate if all ratings and relevant are not null before submitting
     if (
       cesRating !== null &&
       csatRating !== null &&
       npsRating !== null &&
       relevant !== null
     ) {
-      const rating: Rating = {
+      const rating = {
         ces: cesRating,
         csat: csatRating,
         nps: npsRating,
@@ -72,27 +70,27 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId }) => {
         await submitRatingMutation.mutateAsync({
           guideId: guideId,
           rating: rating,
+          modelId: modelId,
         });
-        // Rating submitted successfully
+
         setIsSubmitted(true);
       } catch (error) {
         // Handle error
         console.error("Error submitting rating:", error);
       }
     } else {
-      // Display an error message or handle the validation error
     }
   };
 
   const handleStarClick = (rating: number) => {
     switch (currentStep) {
-      case RatingStep.CES:
+      case RatingStep.ces:
         setCesRating(rating);
         break;
-      case RatingStep.CSAT:
+      case RatingStep.csat:
         setCsatRating(rating);
         break;
-      case RatingStep.NPS:
+      case RatingStep.nps:
         setNpsRating(rating);
         break;
       default:
@@ -115,18 +113,18 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId }) => {
 
     const ratingValue = (() => {
       switch (currentStep) {
-        case RatingStep.CES:
+        case RatingStep.ces:
           return cesRating;
-        case RatingStep.CSAT:
+        case RatingStep.csat:
           return csatRating;
-        case RatingStep.NPS:
+        case RatingStep.nps:
           return npsRating;
         default:
           return 0;
       }
     })();
 
-    if (currentStep === RatingStep.RELEVANT) {
+    if (currentStep === RatingStep.relevant) {
       return (
         <div>
           <h4 className="font-bold mb-4">
@@ -162,7 +160,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId }) => {
       <span
         key={value}
         className={`text-3xl cursor-pointer ${
-          value <= ratingValue ? "text-yellow-500" : "text-gray-300"
+          value <= (ratingValue ?? 0) ? "text-yellow-500" : "text-gray-300"
         }`}
         onClick={() => handleStarClick(value)}
       >
@@ -173,11 +171,11 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId }) => {
     return (
       <div>
         <h4 className="font-bold mb-4">
-          {currentStep === RatingStep.CES
+          {currentStep === RatingStep.ces
             ? "How easily is it to find information on this page?"
-            : currentStep === RatingStep.CSAT
+            : currentStep === RatingStep.csat
             ? "How satisfied are you with Ethio telecom products and services?"
-            : currentStep === RatingStep.NPS
+            : currentStep === RatingStep.nps
             ? "How likely are you to recommend Ethio telecom products and services to a friend or family?"
             : "Is the information relevant for you?"}
         </h4>
@@ -194,7 +192,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId }) => {
           onClick={handleNextStep}
           className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600"
         >
-          {currentStep !== RatingStep.RELEVANT ? "Next" : "Submit Rating"}
+          {currentStep !== RatingStep.relevant ? "Next" : "Submit Rating"}
         </button>
       )}
     </div>

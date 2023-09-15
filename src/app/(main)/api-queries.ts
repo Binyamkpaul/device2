@@ -13,7 +13,7 @@ interface Rating {
   ratingValue: number;
   comment: string;
   guidesId?: number[];
-  isHelpful: boolean;
+  relevant: boolean;
   ces: number;
   csat: number;
   nps: number;
@@ -97,24 +97,31 @@ export const useGetRatingsByGuideIdQuery = (guideId?: number) =>
     },
     enabled: !!guideId,
   });
+
 //post method
 
 export const useSubmitRatingMutation = () => {
   return useMutation(
-    async ({ guideId, rating }: { guideId: number; rating: Rating }) => {
-      const { ratingValue, comment, isHelpful, ces, csat, nps } = rating;
+    async ({
+      guideId,
+      rating,
+      modelId,
+    }: {
+      guideId: number;
+      rating: any;
+      modelId: any;
+    }) => {
+      const { relevant, ces, csat, nps } = rating;
+      console.log("🚀 ~ file: api-queries.ts:106 ~ rating:", rating);
 
       const response = await axios.post("/ratings", {
         data: {
           guide: guideId,
-          rating: {
-            ratingValue: ratingValue,
-            comment: comment,
-            isHelpful: isHelpful,
-            ces: ces,
-            csat: csat,
-            nps: nps,
-          },
+          model: modelId,
+          relevant: relevant,
+          ces: ces,
+          csat: csat,
+          nps: nps,
         },
       });
       return response.data;

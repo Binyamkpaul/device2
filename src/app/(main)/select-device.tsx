@@ -52,7 +52,7 @@ export function SelectDeviceForm() {
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
               <label htmlFor="deviceId" className="block mb-2  text-gray-500">
-                Device Typez
+                Device Type
               </label>
               <select
                 {...register("deviceId")}

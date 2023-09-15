@@ -6,7 +6,7 @@ import RatingForm from "./RatingForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function GuideItem({ guide }: any) {
+export default function GuideItem({ guide, modelId }: any) {
   const [guideId, setGuideId] = useState();
   const { data: steps } = useGetStepsByGuideIdQuery(guideId);
   const [selectedStepIndex, setSelectedStepIndex] = useState(0);
@@ -29,6 +29,9 @@ export default function GuideItem({ guide }: any) {
       setSelectedStepIndex(selectedStepIndex - 1);
     }
   };
+
+  // Check if steps is defined before accessing its length property
+  const isLastStep = steps && selectedStepIndex === steps.length - 1;
 
   return (
     <div>
@@ -184,11 +187,11 @@ export default function GuideItem({ guide }: any) {
       ></hr>
       <br></br>
       {/* <ToastContainer> */}
-      <RatingForm guideId={guide.id} />
+      {isLastStep && <RatingForm guideId={guide.id} modelId={modelId} />}
       {/* </ToastContainer> */}
 
       <br></br>
-      <RatingView guideId={guide.id} />
+      {/* <RatingView guideId={guide.id} /> */}
     </div>
   );
 }
