@@ -10,6 +10,7 @@ import DeviceList from "@/components/devices/devices-list";
 import Rating from "./rating";
 import RatingsView from "./RatingForm";
 import LattesModelsComponent from "@/components/LattesModelsComponent";
+import Nav from "@/components/common/Nav";
 
 export default function Home() {
   const title = "Find a solution for your Device ";
@@ -19,6 +20,7 @@ export default function Home() {
       {/* <TopNav /> */}
       <hr></hr>
       <Navbar />
+      {/* <Nav /> */}
 
       <hr></hr>
       <br></br>

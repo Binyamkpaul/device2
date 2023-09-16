@@ -14,7 +14,6 @@ export default function GuideItem({ guide, modelId }: any) {
   const isSmallScreen = window.innerWidth <= 768;
 
   useEffect(() => {
-    // Reset selected step index when guide ID changes
     setSelectedStepIndex(0);
   }, [guideId]);
 
@@ -30,7 +29,6 @@ export default function GuideItem({ guide, modelId }: any) {
     }
   };
 
-  // Check if steps is defined before accessing its length property
   const isLastStep = steps && selectedStepIndex === steps.length - 1;
 
   return (
