@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import { useSubmitRatingMutation } from "./api-queries";
-// interface Rating {
-//   ces: number;
-//   csat: number;
-//   nps: number;
-//   relevant: boolean;
-// }
-interface RatingFormProps {
-  guideId: number;
-  modelId: number;
-}
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+// Define the RatingStep enum before using it
 enum RatingStep {
   ces,
   csat,
   nps,
   relevant,
+}
+
+interface RatingFormProps {
+  guideId: number;
+  modelId: number;
 }
 
 const RatingForm: React.FC<RatingFormProps> = ({ guideId, modelId }) => {
@@ -33,19 +31,19 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId, modelId }) => {
       if (cesRating !== null) {
         setCurrentStep(RatingStep.csat);
       } else {
-        alert("you need to sumbmit the first Step");
+        toast.error("You need to submit the first step");
       }
     } else if (currentStep === RatingStep.csat) {
       if (csatRating !== null) {
         setCurrentStep(RatingStep.nps);
       } else {
-        alert("you need to sumbmit the Second  Step");
+        toast.error("You need to submit the second step");
       }
     } else if (currentStep === RatingStep.nps) {
       if (npsRating !== null) {
         setCurrentStep(RatingStep.relevant);
       } else {
-        alert("you need to sumbmit the last Step");
+        toast.error("You need to submit the last step");
       }
     } else {
       handleSubmit();
@@ -74,11 +72,14 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId, modelId }) => {
         });
 
         setIsSubmitted(true);
+
+        toast.success("Rating submitted successfully!");
       } catch (error) {
-        // Handle error
         console.error("Error submitting rating:", error);
+        toast.error("Failed to submit rating. Please try again later.");
       }
     } else {
+      toast.error("Please complete all steps before submitting.");
     }
   };
 
@@ -195,6 +196,7 @@ const RatingForm: React.FC<RatingFormProps> = ({ guideId, modelId }) => {
           {currentStep !== RatingStep.relevant ? "Next" : "Submit Rating"}
         </button>
       )}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

@@ -8,7 +8,7 @@ export default function GuidesCategories({
   categoryNames,
   selectedCategory,
 }: any) {
-  const [clickedCategory, setClickedCategory] = useState("");
+  const [clickedCategory, setClickedCategory] = useState("Settings");
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -27,7 +27,9 @@ export default function GuidesCategories({
                 onClick={() => handleCategoryClick(category)}
                 className={`flex flex-col p-8 pl-4 hover:border-green-500 border border-gray-300 lg:ml-7 ${
                   category === selectedCategory ? "bg-gray-500" : ""
-                } ${clickedCategory === category ? "bg-lemon" : ""}`}
+                } ${
+                  clickedCategory === category ? "bg-lemon border-gray-700" : ""
+                }`}
               >
                 {/* Render your category icons here */}
                 {category === "Settings" && (
