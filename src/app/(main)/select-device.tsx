@@ -36,6 +36,9 @@ export function SelectDeviceForm() {
     setSelectedModel(modelId);
   }, [modelId, setSelectedModel]);
 
+  const selectedBrand = brands?.find((brand) => brand.id === brandId);
+  const selectedModel = models?.find((model) => model.id === modelId);
+
   return (
     <>
       <div className="mt-6 flex justify-center space-x-4 mr-16">
@@ -64,14 +67,13 @@ export function SelectDeviceForm() {
                 style={{ width: "200px" }}
               >
                 <option value="">Select Device</option>
-                {devices?.map((device: any) => (
+                {devices?.map((device) => (
                   <option key={device.id} value={device.id}>
                     {device.attributes.name}
                   </option>
                 ))}
               </select>
             </div>
-            <br></br>
             <div>
               <label
                 htmlFor="brandId"
@@ -86,19 +88,17 @@ export function SelectDeviceForm() {
                 style={{ width: "200px" }}
               >
                 <option value="">Select brand</option>
-                {brands?.map((brand: any) => (
+                {brands?.map((brand) => (
                   <option key={brand.id} value={brand.id}>
-                    {brand?.attributes?.name}
+                    {brand.attributes.name}
                   </option>
                 ))}
               </select>
             </div>
-            <br></br>
             <div>
               <label
                 htmlFor="modelId"
                 className="block mb-2 text-gray-500 font-semibold"
-                style={{ paddingBottom: "5px" }}
               >
                 Model
               </label>
@@ -109,28 +109,23 @@ export function SelectDeviceForm() {
                 style={{ width: "200px" }}
               >
                 <option value="">Select model</option>
-                {models?.map((model: any) => (
+                {models?.map((model) => (
                   <option key={model.id} value={model.id}>
-                    {model?.attributes?.name}
+                    {model.attributes.name}
                   </option>
                 ))}
               </select>
             </div>
           </div>
-
-          {/* <button
-            type="submit"
-            className="px-4 py-2 text-white bg-blue-500 rounded-md"
-          >
-            Submit
-          </button> */}
         </form>
       </div>
-      {/* <GuideList id={modelId ?? 0} /> */}
-      {/* <div className="mt-4">
-        <StepList id={modelId ?? 0} />
-      </div> */}
-      {/* <GuideList /> */}
+
+      {selectedBrand && selectedModel && (
+        <h1 className="text-2xl mt-4">
+          Selected: {selectedBrand.attributes.name} -{" "}
+          {selectedModel.attributes.name}
+        </h1>
+      )}
     </>
   );
 }
