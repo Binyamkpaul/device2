@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useGetStepsByGuideIdQuery } from "./api-queries";
-import RatingView from "./RatingView";
 import RatingForm from "./RatingForm";
+//@ts-ignore
+import ReactImageMagnify from "react-image-magnify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaQuestionCircle } from "react-icons/fa"; // Import the Question Circle icon
 import { AiOutlineMenu } from "react-icons/ai";
 
 export default function GuideItem({ guide, modelId }: any) {
@@ -41,6 +41,7 @@ export default function GuideItem({ guide, modelId }: any) {
       >
         <div className="flex items-center text-1xl font-bold text-gray-900 text-center lg:ml-80 sm:ml-16">
           <AiOutlineMenu className="text-blue-500 text-xl mr-2" />
+
           {guide.attributes.question}
         </div>
       </button>
@@ -52,9 +53,10 @@ export default function GuideItem({ guide, modelId }: any) {
               <div key={step.id} onClick={() => setSelectedStepIndex(index)}>
                 {selectedStepIndex === index && (
                   <div className="my-4">
-                    <p className="text-center mt-2 text-sm mb-2 -mr-16">
+                    <p className="text-center mt-2 text-2xl mb-2 ">
                       {step.attributes.description}
                     </p>
+
                     {step?.attributes?.screenshot?.data?.attributes?.formats
                       ?.small?.url && (
                       <div
@@ -62,14 +64,28 @@ export default function GuideItem({ guide, modelId }: any) {
                           maxWidth: "100%",
                         }}
                       >
-                        <img
-                          alt="Screenshot"
-                          src={
-                            "http://127.0.0.1:1337" +
-                            step?.attributes?.screenshot?.data?.attributes
-                              ?.formats?.small?.url
-                          }
-                          className="mx-auto border border-transparent"
+                        {/* @ts-ignore*/}
+                        <ReactImageMagnify
+                          {...{
+                            smallImage: {
+                              alt: "Screenshot",
+                              src:
+                                "https://172.22.4.56/device-admin/" +
+                                step?.attributes?.screenshot?.data?.attributes
+                                  ?.formats?.small?.url,
+                              width: "350",
+                              height: "550",
+                            },
+                            largeImage: {
+                              src:
+                                "https://172.22.4.56/device-admin/" +
+                                step?.attributes?.screenshot?.data?.attributes
+                                  ?.formats?.small?.url,
+                              width: 1000,
+                              height: 1000,
+                            },
+                          }}
+                          className="mx-auto border border-transparent hover:border-green-500"
                           style={{
                             maxWidth: "100%", // Limit the image width to 100% of its container
                           }}
@@ -101,8 +117,9 @@ export default function GuideItem({ guide, modelId }: any) {
           </div>
         </>
       ) : (
+        // Render image on the left and steps list on the right on large screens
         <div className="flex">
-          <div className="lg:w-1/2 lg:ml-72 ">
+          <div className="lg:w-1/2 lg:ml-72">
             {steps?.map((step: any, index: number) => (
               <div key={step.id} onClick={() => setSelectedStepIndex(index)}>
                 {selectedStepIndex === index && (
@@ -114,14 +131,28 @@ export default function GuideItem({ guide, modelId }: any) {
                           maxWidth: "100%", // Limit the image width to 100% of its container
                         }}
                       >
-                        <img
-                          alt="Screenshot"
-                          src={
-                            "http://127.0.0.1:1337" +
-                            step?.attributes?.screenshot?.data?.attributes
-                              ?.formats?.small?.url
-                          }
-                          className="mx-auto border border-transparent"
+                        {/* @ts-ignore*/}
+                        <ReactImageMagnify
+                          {...{
+                            smallImage: {
+                              alt: "Screenshot",
+                              src:
+                                "https://172.22.4.56/device-admin/" +
+                                step?.attributes?.screenshot?.data?.attributes
+                                  ?.formats?.small?.url,
+                              width: "300",
+                              height: "600",
+                            },
+                            largeImage: {
+                              src:
+                                "https://172.22.4.56/device-admin/" +
+                                step?.attributes?.screenshot?.data?.attributes
+                                  ?.formats?.small?.url,
+                              width: 1000,
+                              height: 1000,
+                            },
+                          }}
+                          className="mx-auto border border-transparent hover:border-green-500"
                           style={{
                             maxWidth: "100%", // Limit the image width to 100% of its container
                           }}
@@ -134,7 +165,7 @@ export default function GuideItem({ guide, modelId }: any) {
             ))}
           </div>
           <div className="lg:w-1/2 pt-10">
-            <ol className="pl-18">
+            <ol className="pl-8">
               {steps?.map((step: any, index: number) => (
                 <li
                   key={step.id}
@@ -150,11 +181,15 @@ export default function GuideItem({ guide, modelId }: any) {
           </div>
         </div>
       )}
-      <hr className="lg:ml-72 sm:ml-16"></hr>
+      <hr
+        className="lg:ml-72 lg:mr-72 sm:mr-72 sm:ml-16"
+        // style={{ borderTop: "1px solid black" }}
+      ></hr>
       <br></br>
-      {/* <ToastContainer> */}
+
       {isLastStep && <RatingForm guideId={guide.id} modelId={modelId} />}
-      {/* </ToastContainer> */}
+      {/* <ToastContainer/> */}
+
       <br></br>
       {/* <RatingView guideId={guide.id} /> */}
     </div>
