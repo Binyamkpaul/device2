@@ -54,20 +54,16 @@ export function SelectDeviceForm() {
         <form className="mt-4 space-y-4">
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
-              <label
-                htmlFor="deviceId"
-                className="block mb-2 text-gray-500 font-semibold"
-              >
-                Device
+              <label htmlFor="deviceId" className="block mb-2 text-gray-500">
+                Device Type
               </label>
               <select
                 {...register("deviceId")}
                 id="deviceId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400"
-                style={{ width: "200px" }}
               >
                 <option value="">Select Device</option>
-                {devices?.map((device) => (
+                {devices?.map((device: any) => (
                   <option key={device.id} value={device.id}>
                     {device.attributes.name}
                   </option>
@@ -75,43 +71,35 @@ export function SelectDeviceForm() {
               </select>
             </div>
             <div>
-              <label
-                htmlFor="brandId"
-                className="block mb-2 text-gray-500 font-semibold"
-              >
+              <label htmlFor="brandId" className="block mb-2 text-gray-500">
                 Brand
               </label>
               <select
                 {...register("brandId")}
                 id="brandId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400"
-                style={{ width: "200px" }}
               >
                 <option value="">Select brand</option>
-                {brands?.map((brand) => (
+                {brands?.map((brand: any) => (
                   <option key={brand.id} value={brand.id}>
-                    {brand.attributes.name}
+                    {brand?.attributes?.name}
                   </option>
                 ))}
               </select>
             </div>
             <div>
-              <label
-                htmlFor="modelId"
-                className="block mb-2 text-gray-500 font-semibold"
-              >
+              <label htmlFor="modelId" className="block mb-2 text-gray-500">
                 Model
               </label>
               <select
                 {...register("modelId")}
                 id="modelId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400"
-                style={{ width: "200px" }}
               >
                 <option value="">Select model</option>
-                {models?.map((model) => (
+                {models?.map((model: any) => (
                   <option key={model.id} value={model.id}>
-                    {model.attributes.name}
+                    {model?.attributes?.name}
                   </option>
                 ))}
               </select>
@@ -120,12 +108,14 @@ export function SelectDeviceForm() {
         </form>
       </div>
 
-      {selectedBrand && selectedModel && (
-        <h1 className="text-2xl mt-4">
-          Selected: {selectedBrand.attributes.name} -{" "}
-          {selectedModel.attributes.name}
-        </h1>
-      )}
+      <div className="mt-4">
+        {selectedBrand && selectedModel && (
+          <h1 className="text-2xl">
+            Selected: {selectedBrand.attributes.name} -{" "}
+            {selectedModel.attributes.name}
+          </h1>
+        )}
+      </div>
     </>
   );
 }

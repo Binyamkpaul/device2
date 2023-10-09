@@ -13,4 +13,7 @@ export const queryKeys = {
   csat: "csat",
   nps: "nps",
   relevant: "relevant",
+  device: "device",
+  model: "model",
+  brand: "brand",
 };
