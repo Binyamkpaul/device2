@@ -11,6 +11,8 @@ import { selectedModelAtom } from "@/store";
 
 export function SelectDeviceForm() {
   const setSelectedModel = useSetAtom(selectedModelAtom);
+  const [selectedModelName, setSelectedModelName] = useState("");
+  const [selectedBrandName, setSelectedBrandName] = useState("");
   const [guideFetched, setGuideFetched] = useState(false);
 
   const {
@@ -38,12 +40,23 @@ export function SelectDeviceForm() {
     setGuideFetched(false);
   }, [modelId, setSelectedModel]);
 
-  const handleFormSubmit = (data) => {
-    // Perform any necessary actions when the form is submitted
-    // For example, fetch the guide based on the selected model
-    // and update the state variables accordingly
-    setGuideFetched(true);
-  };
+  useEffect(() => {
+    if (modelId) {
+      // Fetch the guide for the selected model here
+      // Simulating the guide fetch with setTimeout
+      setTimeout(() => {
+        setGuideFetched(true);
+        const selectedModelData = models?.find(
+          (model) => model.id === parseInt(modelId)
+        );
+        setSelectedModelName(selectedModelData?.attributes?.name || "");
+        setSelectedBrandName(
+          brands?.find((brand) => brand.id === parseInt(brandId))?.attributes
+            ?.name || ""
+        );
+      }, 2000);
+    }
+  }, [modelId, models, brandId, brands]);
 
   return (
     <>
@@ -57,7 +70,7 @@ export function SelectDeviceForm() {
             className="w-64 h-auto ps-14"
           />
         </div>
-        <form className="mt-4 space-y-4" onSubmit={handleFormSubmit}>
+        <form className="mt-4 space-y-4">
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
               <label htmlFor="deviceId" className="block mb-2 text-gray-500">
@@ -111,18 +124,15 @@ export function SelectDeviceForm() {
               </select>
             </div>
           </div>
-          <button
-            type="submit"
-            className="px-4 py-2 text-white bg-blue-500 rounded-md"
-          >
-            Submit
-          </button>
         </form>
       </div>
 
       {guideFetched && (
-        <div className="mt-4">
-          <h1 className="text-2xl">Test</h1>
+        <div className="mt-4 text-center">
+          <h1 className="text-4xl font-bold text-blue-500">
+            {selectedBrandName} {selectedModelName}
+          </h1>
+          {/* <hr className="mt-2 border-blue-500" /> */}
         </div>
       )}
     </>
