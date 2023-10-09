@@ -51,8 +51,11 @@ export function SelectDeviceForm() {
         <form className="mt-4 space-y-4">
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
-              <label htmlFor="deviceId" className="block mb-2 text-gray-500">
-                Device Type
+              <label
+                htmlFor="deviceId"
+                className="block mb-2 text-gray-500 font-semibold"
+              >
+                Device
               </label>
               <select
                 {...register("deviceId")}
@@ -68,8 +71,12 @@ export function SelectDeviceForm() {
                 ))}
               </select>
             </div>
+            <br></br>
             <div>
-              <label htmlFor="brandId" className="block mb-2 text-gray-500">
+              <label
+                htmlFor="brandId"
+                className="block mb-2 text-gray-500 font-semibold"
+              >
                 Brand
               </label>
               <select
@@ -86,8 +93,13 @@ export function SelectDeviceForm() {
                 ))}
               </select>
             </div>
+            <br></br>
             <div>
-              <label htmlFor="modelId" className="block mb-2 text-gray-500">
+              <label
+                htmlFor="modelId"
+                className="block mb-2 text-gray-500 font-semibold"
+                style={{ paddingBottom: "5px" }}
+              >
                 Model
               </label>
               <select
