@@ -51,13 +51,14 @@ export function SelectDeviceForm() {
         <form className="mt-4 space-y-4">
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
-              <label htmlFor="deviceId" className="block mb-2  text-gray-500">
+              <label htmlFor="deviceId" className="block mb-2 text-gray-500">
                 Device Type
               </label>
               <select
                 {...register("deviceId")}
                 id="deviceId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400"
+                style={{ width: "200px" }}
               >
                 <option value="">Select Device</option>
                 {devices?.map((device: any) => (
@@ -68,13 +69,14 @@ export function SelectDeviceForm() {
               </select>
             </div>
             <div>
-              <label htmlFor="brandId" className="block mb-2  text-gray-500">
+              <label htmlFor="brandId" className="block mb-2 text-gray-500">
                 Brand
               </label>
               <select
                 {...register("brandId")}
                 id="brandId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400"
+                style={{ width: "200px" }}
               >
                 <option value="">Select brand</option>
                 {brands?.map((brand: any) => (
@@ -85,13 +87,14 @@ export function SelectDeviceForm() {
               </select>
             </div>
             <div>
-              <label htmlFor="modelId" className="block mb-2  text-gray-500">
+              <label htmlFor="modelId" className="block mb-2 text-gray-500">
                 Model
               </label>
               <select
                 {...register("modelId")}
                 id="modelId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400"
+                style={{ width: "200px" }}
               >
                 <option value="">Select model</option>
                 {models?.map((model: any) => (
