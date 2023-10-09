@@ -1,16 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import {
   useGetBrandsByDeviceIdQuery,
   useGetDevices,
   useGetModelsByBrandIdQuery,
+  useGetGuide,
 } from "./api-queries";
 import { useSetAtom } from "jotai";
 import { selectedModelAtom } from "@/store";
 
 export function SelectDeviceForm() {
   const setSelectedModel = useSetAtom(selectedModelAtom);
+  const [guideFetched, setGuideFetched] = useState(false);
 
   const {
     register,
@@ -31,13 +33,18 @@ export function SelectDeviceForm() {
 
   const { data: brands } = useGetBrandsByDeviceIdQuery(deviceId);
   const { data: models } = useGetModelsByBrandIdQuery(brandId);
+  const { data: guide } = useGetGuide(modelId);
 
   useEffect(() => {
     setSelectedModel(modelId);
+    setGuideFetched(false);
   }, [modelId, setSelectedModel]);
 
-  const selectedBrand = brands?.find((brand) => brand.id === brandId);
-  const selectedModel = models?.find((model) => model.id === modelId);
+  useEffect(() => {
+    if (guide) {
+      setGuideFetched(true);
+    }
+  }, [guide]);
 
   return (
     <>
@@ -108,14 +115,11 @@ export function SelectDeviceForm() {
         </form>
       </div>
 
-      <div className="mt-4">
-        {selectedBrand && selectedModel && (
-          <h1 className="text-2xl">
-            Selected: {selectedBrand.attributes.name} -{" "}
-            {selectedModel.attributes.name}
-          </h1>
-        )}
-      </div>
+      {guideFetched && (
+        <div className="mt-4">
+          <h1 className="text-2xl">Test</h1>
+        </div>
+      )}
     </>
   );
 }
