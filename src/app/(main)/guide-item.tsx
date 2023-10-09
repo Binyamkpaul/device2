@@ -39,7 +39,7 @@ export default function GuideItem({ guide, modelId }: any) {
           setGuideId(guide.id);
         }}
       >
-        <div className="flex items-center text-1xl font-bold text-gray-900 text-center lg:ml-80 sm:ml-16">
+        <div className="flex items-center text-2xl font-bold text-gray-900 text-center lg:ml-80 sm:ml-16">
           <AiOutlineMenu className="text-blue-500 text-xl mr-2" />
 
           {guide.attributes.question}
