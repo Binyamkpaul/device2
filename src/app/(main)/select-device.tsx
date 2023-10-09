@@ -5,7 +5,6 @@ import {
   useGetBrandsByDeviceIdQuery,
   useGetDevices,
   useGetModelsByBrandIdQuery,
-  useGetGuide,
 } from "./api-queries";
 import { useSetAtom } from "jotai";
 import { selectedModelAtom } from "@/store";
@@ -33,18 +32,18 @@ export function SelectDeviceForm() {
 
   const { data: brands } = useGetBrandsByDeviceIdQuery(deviceId);
   const { data: models } = useGetModelsByBrandIdQuery(brandId);
-  const { data: guide } = useGetGuide(modelId);
 
   useEffect(() => {
     setSelectedModel(modelId);
     setGuideFetched(false);
   }, [modelId, setSelectedModel]);
 
-  useEffect(() => {
-    if (guide) {
-      setGuideFetched(true);
-    }
-  }, [guide]);
+  const handleFormSubmit = (data) => {
+    // Perform any necessary actions when the form is submitted
+    // For example, fetch the guide based on the selected model
+    // and update the state variables accordingly
+    setGuideFetched(true);
+  };
 
   return (
     <>
@@ -58,7 +57,7 @@ export function SelectDeviceForm() {
             className="w-64 h-auto ps-14"
           />
         </div>
-        <form className="mt-4 space-y-4">
+        <form className="mt-4 space-y-4" onSubmit={handleFormSubmit}>
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
               <label htmlFor="deviceId" className="block mb-2 text-gray-500">
@@ -112,6 +111,12 @@ export function SelectDeviceForm() {
               </select>
             </div>
           </div>
+          <button
+            type="submit"
+            className="px-4 py-2 text-white bg-blue-500 rounded-md"
+          >
+            Submit
+          </button>
         </form>
       </div>
 
