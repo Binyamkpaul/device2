@@ -41,19 +41,20 @@ export function SelectDeviceForm() {
   }, [modelId, setSelectedModel]);
 
   useEffect(() => {
-    if (modelId) {
-      // Fetch the guide for the selected model here
-      // Simulating the guide fetch with setTimeout
+    if (modelId && brandId) {
       setTimeout(() => {
         setGuideFetched(true);
         const selectedModelData = models?.find(
-          (model) => model.id === parseInt(modelId)
+          (model: any) => model.id === parseInt(modelId)
         );
         setSelectedModelName(selectedModelData?.attributes?.name || "");
-        setSelectedBrandName(
-          brands?.find((brand) => brand.id === parseInt(brandId))?.attributes
-            ?.name || ""
+
+        const selectedBrand = brands?.find(
+          (brand: any) => brand.id === parseInt(brandId)
         );
+        if (selectedBrand) {
+          setSelectedBrandName(selectedBrand.attributes?.name || "");
+        }
       }, 2000);
     }
   }, [modelId, models, brandId, brands]);
@@ -96,7 +97,7 @@ export function SelectDeviceForm() {
               <select
                 {...register("brandId")}
                 id="brandId"
-                className="form-select mt-4 space-y-4 rounded border border-gray-400"
+                className="form-select mt-4 space-y-4 rounded border border-gray-400 select-width"
               >
                 <option value="">Select brand</option>
                 {brands?.map((brand: any) => (
@@ -113,7 +114,7 @@ export function SelectDeviceForm() {
               <select
                 {...register("modelId")}
                 id="modelId"
-                className="form-select mt-4 space-y-4 rounded border border-gray-400"
+                className="form-select mt-4 space-y-4 rounded border border-gray-400 select-width"
               >
                 <option value="">Select model</option>
                 {models?.map((model: any) => (
@@ -126,13 +127,13 @@ export function SelectDeviceForm() {
           </div>
         </form>
       </div>
-
+      <br></br>
+      <br></br>
       {guideFetched && (
         <div className="mt-4 text-center">
           <h1 className="text-4xl font-bold text-blue-500">
             {selectedBrandName} {selectedModelName}
           </h1>
-          {/* <hr className="mt-2 border-blue-500" /> */}
         </div>
       )}
     </>
