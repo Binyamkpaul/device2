@@ -135,8 +135,13 @@ export function SelectDeviceForm() {
       <br></br>
       {guideFetched && (
         <div className="mt-4 text-center">
-          <h1 className="text-4xl font-bold text-blue-500">
-            {selectedBrandName} {selectedModelName}
+          <h1 className="text-4xl font-bold text-blue-500 animate-pulse">
+            <span className="transition-transform inline-block">
+              {selectedBrandName}
+            </span>{" "}
+            <span className="transition-transform inline-block">
+              {selectedModelName}
+            </span>
           </h1>
         </div>
       )}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useGetStepsByGuideIdQuery } from "./api-queries";
 import RatingForm from "./RatingForm";
-//@ts-ignore
 import ReactImageMagnify from "react-image-magnify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,7 +40,6 @@ export default function GuideItem({ guide, modelId }: any) {
       >
         <div className="flex items-center text-2xl font-bold text-gray-900 text-center lg:ml-80 sm:ml-16">
           <AiOutlineMenu className="text-blue-500 text-xl mr-2" />
-
           {guide.attributes.question}
         </div>
       </button>
@@ -50,13 +48,20 @@ export default function GuideItem({ guide, modelId }: any) {
         <>
           <div className="lg:ml-72">
             {steps?.map((step: any, index: number) => (
-              <div key={step.id} onClick={() => setSelectedStepIndex(index)}>
+              <div
+                key={step.id}
+                onClick={() => setSelectedStepIndex(index)}
+                className={`${
+                  selectedStepIndex === index
+                    ? "transform scale-105 transition-transform duration-300 ease-in-out"
+                    : ""
+                }`}
+              >
                 {selectedStepIndex === index && (
                   <div className="my-4">
                     <p className="text-center mt-2 text-2xl mb-2 ">
                       {step.attributes.description}
                     </p>
-
                     {step?.attributes?.screenshot?.data?.attributes?.formats
                       ?.small?.url && (
                       <div
@@ -64,30 +69,23 @@ export default function GuideItem({ guide, modelId }: any) {
                           maxWidth: "100%",
                         }}
                       >
-                        {/* @ts-ignore*/}
                         <ReactImageMagnify
                           {...{
                             smallImage: {
                               alt: "Screenshot",
-                              src:
-                                "https://172.22.4.56/device-admin/" +
-                                step?.attributes?.screenshot?.data?.attributes
-                                  ?.formats?.small?.url,
+                              src: `https://172.22.4.56/device-admin/${step?.attributes?.screenshot?.data?.attributes?.formats?.small?.url}`,
                               width: "350",
                               height: "550",
                             },
                             largeImage: {
-                              src:
-                                "https://172.22.4.56/device-admin/" +
-                                step?.attributes?.screenshot?.data?.attributes
-                                  ?.formats?.small?.url,
+                              src: `https://172.22.4.56/device-admin/${step?.attributes?.screenshot?.data?.attributes?.formats?.small?.url}`,
                               width: 1000,
                               height: 1000,
                             },
                           }}
                           className="mx-auto border border-transparent hover:border-green-500"
                           style={{
-                            maxWidth: "100%", // Limit the image width to 100% of its container
+                            maxWidth: "100%",
                           }}
                         />
                       </div>
@@ -117,44 +115,44 @@ export default function GuideItem({ guide, modelId }: any) {
           </div>
         </>
       ) : (
-        // Render image on the left and steps list on the right on large screens
         <div className="flex">
           <div className="lg:w-1/2 lg:ml-72">
             {steps?.map((step: any, index: number) => (
-              <div key={step.id} onClick={() => setSelectedStepIndex(index)}>
+              <div
+                key={step.id}
+                onClick={() => setSelectedStepIndex(index)}
+                className={`${
+                  selectedStepIndex === index
+                    ? "transform scale-105 transition-transform duration-300 ease-in-out"
+                    : ""
+                }`}
+              >
                 {selectedStepIndex === index && (
                   <div className="my-4">
                     {step?.attributes?.screenshot?.data?.attributes?.formats
                       ?.small?.url && (
                       <div
                         style={{
-                          maxWidth: "100%", // Limit the image width to 100% of its container
+                          maxWidth: "100%",
                         }}
                       >
-                        {/* @ts-ignore*/}
                         <ReactImageMagnify
                           {...{
                             smallImage: {
                               alt: "Screenshot",
-                              src:
-                                "https://172.22.4.56/device-admin/" +
-                                step?.attributes?.screenshot?.data?.attributes
-                                  ?.formats?.small?.url,
-                              width: "300",
-                              height: "600",
+                              src: `https://172.22.4.56/device-admin/${step?.attributes?.screenshot?.data?.attributes?.formats?.small?.url}`,
+                              width: "auto",
+                              height: "auto",
                             },
                             largeImage: {
-                              src:
-                                "https://172.22.4.56/device-admin/" +
-                                step?.attributes?.screenshot?.data?.attributes
-                                  ?.formats?.small?.url,
+                              src: `https://172.22.4.56/device-admin/${step?.attributes?.screenshot?.data?.attributes?.formats?.small?.url}`,
                               width: 1000,
                               height: 1000,
                             },
                           }}
                           className="mx-auto border border-transparent hover:border-green-500"
                           style={{
-                            maxWidth: "100%", // Limit the image width to 100% of its container
+                            maxWidth: "100%",
                           }}
                         />
                       </div>
@@ -181,17 +179,10 @@ export default function GuideItem({ guide, modelId }: any) {
           </div>
         </div>
       )}
-      <hr
-        className="lg:ml-72 lg:mr-72 sm:mr-72 sm:ml-16"
-        // style={{ borderTop: "1px solid black" }}
-      ></hr>
+      <hr className="lg:ml-72 lg:mr-72 sm:mr-72 sm:ml-16"></hr>
       <br></br>
-
       {isLastStep && <RatingForm guideId={guide.id} modelId={modelId} />}
-      {/* <ToastContainer/> */}
-
       <br></br>
-      {/* <RatingView guideId={guide.id} /> */}
     </div>
   );
 }

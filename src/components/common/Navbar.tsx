@@ -1,13 +1,24 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLinks } from "./Navlinks";
 import SearchComponent from "./search";
 
 export default function Navbar() {
   const [navbar, setNavbar] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +27,11 @@ export default function Navbar() {
   };
 
   return (
-    <div className="sticky top-0 z-50 bg-white bg-opacity-30 backdrop-blur-lg shadow-lg">
+    <div
+      className={`sticky top-0 z-50 bg-white bg-opacity-30 backdrop-blur-lg shadow-lg ${
+        navbar ? "bg-opacity-80" : ""
+      }`}
+    >
       <Head>
         <meta
           name="description"
