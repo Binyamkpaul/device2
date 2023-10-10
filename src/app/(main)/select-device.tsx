@@ -81,6 +81,7 @@ export function SelectDeviceForm() {
                 {...register("deviceId")}
                 id="deviceId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400"
+                style={{ width: "200px" }}
               >
                 <option value="">Select Device</option>
                 {devices?.map((device: any) => (
@@ -90,6 +91,7 @@ export function SelectDeviceForm() {
                 ))}
               </select>
             </div>
+            <br></br>
             <div>
               <label htmlFor="brandId" className="block mb-2 text-gray-500">
                 Brand
@@ -98,6 +100,7 @@ export function SelectDeviceForm() {
                 {...register("brandId")}
                 id="brandId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400 select-width"
+                style={{ width: "200px" }}
               >
                 <option value="">Select brand</option>
                 {brands?.map((brand: any) => (
@@ -107,6 +110,7 @@ export function SelectDeviceForm() {
                 ))}
               </select>
             </div>
+            <br></br>
             <div>
               <label htmlFor="modelId" className="block mb-2 text-gray-500">
                 Model
@@ -115,6 +119,7 @@ export function SelectDeviceForm() {
                 {...register("modelId")}
                 id="modelId"
                 className="form-select mt-4 space-y-4 rounded border border-gray-400 select-width"
+                style={{ width: "200px" }}
               >
                 <option value="">Select model</option>
                 {models?.map((model: any) => (
@@ -127,7 +132,6 @@ export function SelectDeviceForm() {
           </div>
         </form>
       </div>
-      <br></br>
       <br></br>
       {guideFetched && (
         <div className="mt-4 text-center">
