@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetStepsByGuideIdQuery } from "./api-queries";
 import RatingForm from "./RatingForm";
+//@ts-ignore
 import ReactImageMagnify from "react-image-magnify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,9 +39,11 @@ export default function GuideItem({ guide, modelId }: any) {
           setGuideId(guide.id);
         }}
       >
-        <div className="flex items-center text-2xl font-bold text-gray-900 text-center lg:ml-80 sm:ml-16">
+        <div className="flex items-center text-2xl text-gray-900 text-center lg:ml-80 sm:ml-16">
           <AiOutlineMenu className="text-blue-500 text-xl mr-2" />
+
           {guide.attributes.question}
+          <hr></hr>
         </div>
       </button>
       <br></br>
@@ -128,7 +131,7 @@ export default function GuideItem({ guide, modelId }: any) {
                 }`}
               >
                 {selectedStepIndex === index && (
-                  <div className="my-4">
+                  <div className="my-4 ">
                     {step?.attributes?.screenshot?.data?.attributes?.formats
                       ?.small?.url && (
                       <div
