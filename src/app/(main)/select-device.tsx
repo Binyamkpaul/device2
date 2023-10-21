@@ -61,13 +61,13 @@ export function SelectDeviceForm() {
 
   return (
     <>
-      <div className="mt-6 flex justify-center space-x-4 mr-16">
+      <div className="mt-6 pt-4  btn btn-outline border-2 border-lime-500 rounded-xl flex justify-center space-x-4 ml-32 mr-32">
         <div className="hidden sm:block">
           <Image
-            src="https://m.media-amazon.com/images/I/416hJsPKR3L.jpg"
+            src="https://friendtok.com/first%20bg.png"
             alt="Device"
-            height={300}
-            width={300}
+            height={400}
+            width={600}
             className="w-64 h-auto ps-14"
           />
         </div>
@@ -133,6 +133,17 @@ export function SelectDeviceForm() {
         </form>
       </div>
       <br></br>
+      {!guideFetched && (
+        <div className="hidden sm:block ml-32">
+          <Image
+            src="https://friendtok.com/Screenshot%202023-10-21%20090932.png"
+            alt="Device"
+            height={700}
+            width={1000}
+            className="w-85 h-auto ps-50"
+          />
+        </div>
+      )}
       {guideFetched && (
         <div className="mt-4 text-center">
           <h1 className="text-4xl font-bold text-blue-500 animate-pulse">

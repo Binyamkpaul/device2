@@ -24,6 +24,7 @@ export default function Home() {
 
       <hr></hr>
       <br></br>
+      <br></br>
       <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-center lg:ml-24 sm:ml-0">
         {title}
       </h2>
