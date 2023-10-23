@@ -58,23 +58,34 @@ export function SelectDeviceForm() {
       }, 2000);
     }
   }, [modelId, models, brandId, brands]);
+  const title = "Find a solution for your Device ";
 
   return (
-    <>
-      <div className="mt-6 pt-4  btn btn-outline border-2 border-lime-500 rounded-xl flex justify-center space-x-4 ml-32 mr-32">
+    <div
+    // style={{
+    //   background:
+    //     'rgba(255, 255, 255, 0.8) url("https://img.freepik.com/premium-vector/abstract-background-with-wavy-lines-white-background-abstract-gradient-background-design_745217-70.jpg?w=900") repeat', // Adjust alpha (transparency) value as needed
+    // }}
+    >
+      <br></br>
+      <h2 className="text-2xl font-bold tracking-tight text-lime-500 text-center lg:ml-24 sm:ml-0 p-2">
+        {title}
+      </h2>
+
+      <div className="mt-6 pt-4 bg-gray-100 border-2 border-gray-300 rounded-xl flex justify-center space-x-4 ml-32 mr-32">
         <div className="hidden sm:block">
           <Image
-            src="https://friendtok.com/first%20bg.png"
+            src="https://friendtok.com/first_bg-removebg-preview.png"
             alt="Device"
             height={400}
             width={600}
-            className="w-64 h-auto ps-14"
+            className="w-80 h-auto ps-14"
           />
         </div>
         <form className="mt-4 space-y-4">
           <div className="flex flex-col sm:flex-row sm:space-x-4">
             <div>
-              <label htmlFor="deviceId" className="block mb-2 text-gray-500">
+              <label htmlFor="deviceId" className="block text-gray-500">
                 Device Type
               </label>
               <select
@@ -93,7 +104,7 @@ export function SelectDeviceForm() {
             </div>
             <br></br>
             <div>
-              <label htmlFor="brandId" className="block mb-2 text-gray-500">
+              <label htmlFor="brandId" className="block text-gray-500">
                 Brand
               </label>
               <select
@@ -112,7 +123,7 @@ export function SelectDeviceForm() {
             </div>
             <br></br>
             <div>
-              <label htmlFor="modelId" className="block mb-2 text-gray-500">
+              <label htmlFor="modelId" className="block text-gray-500">
                 Model
               </label>
               <select
@@ -156,6 +167,6 @@ export function SelectDeviceForm() {
           </h1>
         </div>
       )}
-    </>
+    </div>
   );
 }
