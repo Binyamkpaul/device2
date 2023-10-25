@@ -1,5 +1,7 @@
 "use client";
-import { SelectDeviceForm } from "@/app/(main)/select-device";
+import SocialNetworksHub, {
+  SelectDeviceForm,
+} from "@/app/(main)/select-device";
 import { GuideList } from "../guides/GuideList";
 import GuidesList from "./guides";
 import GuidesCategories from "./guides-categories";
@@ -29,7 +31,7 @@ export default function Home() {
         {title}
       </h2>
       {/* <div className="container "> */}
-      <SelectDeviceForm />
+      <SocialNetworksHub />
 
       {/* <Form /> */}
       {/* <GuidesCategories /> */}

@@ -1,172 +1,82 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import Image from "next/image";
-import {
-  useGetBrandsByDeviceIdQuery,
-  useGetDevices,
-  useGetModelsByBrandIdQuery,
-} from "./api-queries";
-import { useSetAtom } from "jotai";
-import { selectedModelAtom } from "@/store";
+import React, { useState } from "react";
 
-export function SelectDeviceForm() {
-  const setSelectedModel = useSetAtom(selectedModelAtom);
-  const [selectedModelName, setSelectedModelName] = useState("");
-  const [selectedBrandName, setSelectedBrandName] = useState("");
-  const [guideFetched, setGuideFetched] = useState(false);
+const SocialNetworksHub: React.FC = () => {
+  const [socialNetworks, setSocialNetworks] = useState([]);
 
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      deviceId: undefined,
-      brandId: undefined,
-      modelId: undefined,
-    },
-  });
-
-  const { data: devices } = useGetDevices();
-  const deviceId = watch("deviceId");
-  const brandId = watch("brandId");
-  const modelId = watch("modelId");
-
-  const { data: brands } = useGetBrandsByDeviceIdQuery(deviceId);
-  const { data: models } = useGetModelsByBrandIdQuery(brandId);
-
-  useEffect(() => {
-    setSelectedModel(modelId);
-    setGuideFetched(false);
-  }, [modelId, setSelectedModel]);
-
-  useEffect(() => {
-    if (modelId && brandId) {
-      setTimeout(() => {
-        setGuideFetched(true);
-        const selectedModelData = models?.find(
-          (model: any) => model.id === parseInt(modelId)
-        );
-        setSelectedModelName(selectedModelData?.attributes?.name || "");
-
-        const selectedBrand = brands?.find(
-          (brand: any) => brand.id === parseInt(brandId)
-        );
-        if (selectedBrand) {
-          setSelectedBrandName(selectedBrand.attributes?.name || "");
-        }
-      }, 2000);
-    }
-  }, [modelId, models, brandId, brands]);
-  const title = "Find a solution for your Device ";
+  const fetchSocialNetworks = () => {
+    // Simulated data for social networks (replace with actual data fetching)
+    const socialNetworkData = [
+      { name: "Facebook", url: "https://www.facebook.com/yourcompany" },
+      { name: "Twitter", url: "https://www.twitter.com/yourcompany" },
+      { name: "LinkedIn", url: "https://www.linkedin.com/company/yourcompany" },
+      { name: "YouTube", url: "https://www.youtube.com/yourcompany" },
+    ];
+    setSocialNetworks(socialNetworkData);
+  };
 
   return (
-    <div
-    // style={{
-    //   background:
-    //     'rgba(255, 255, 255, 0.8) url("https://img.freepik.com/premium-vector/abstract-background-with-wavy-lines-white-background-abstract-gradient-background-design_745217-70.jpg?w=900") repeat', // Adjust alpha (transparency) value as needed
-    // }}
-    >
-      <br></br>
-      <h2 className="text-2xl font-bold tracking-tight text-lime-500 text-center lg:ml-24 sm:ml-0 p-2">
-        {title}
-      </h2>
-
-      <div className="mt-6 pt-4 bg-gray-100 border-2 border-gray-300 rounded-xl flex justify-center space-x-4 ml-32 mr-32">
-        <div className="hidden sm:block">
-          <Image
-            src="https://friendtok.com/first_bg-removebg-preview.png"
-            alt="Device"
-            height={400}
-            width={600}
-            className="w-80 h-auto ps-14"
-          />
-        </div>
-        <form className="mt-4 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:space-x-4">
-            <div>
-              <label htmlFor="deviceId" className="block text-gray-500">
-                Device Type
-              </label>
-              <select
-                {...register("deviceId")}
-                id="deviceId"
-                className="form-select mt-4 space-y-4 rounded border border-gray-400"
-                style={{ width: "200px" }}
+    <div>
+      <header className="bg-gray-900 text-white text-center py-4">
+        <h1 className="text-3xl font-semibold">Your Company Digital Hub</h1>
+      </header>
+      <nav className="bg-gray-700 text-center py-2">
+        <a
+          href="#social"
+          className="text-white text-lg font-medium px-4 hover:underline"
+        >
+          Social Networks
+        </a>
+      </nav>
+      <main className="p-4">
+        <div className="container mx-auto" id="social">
+          <h2 className="text-2xl font-semibold mb-4">Social Networks</h2>
+          <button
+            onClick={fetchSocialNetworks}
+            className="bg-blue-500 text-white font-medium px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Social Networks
+          </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {socialNetworks.map((network, index) => (
+              <div
+                className="bg-white rounded-lg shadow p-4 text-center"
+                key={index}
               >
-                <option value="">Select Device</option>
-                {devices?.map((device: any) => (
-                  <option key={device.id} value={device.id}>
-                    {device.attributes.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <br></br>
-            <div>
-              <label htmlFor="brandId" className="block text-gray-500">
-                Brand
-              </label>
-              <select
-                {...register("brandId")}
-                id="brandId"
-                className="form-select mt-4 space-y-4 rounded border border-gray-400 select-width"
-                style={{ width: "200px" }}
-              >
-                <option value="">Select brand</option>
-                {brands?.map((brand: any) => (
-                  <option key={brand.id} value={brand.id}>
-                    {brand?.attributes?.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <br></br>
-            <div>
-              <label htmlFor="modelId" className="block text-gray-500">
-                Model
-              </label>
-              <select
-                {...register("modelId")}
-                id="modelId"
-                className="form-select mt-4 space-y-4 rounded border border-gray-400 select-width"
-                style={{ width: "200px" }}
-              >
-                <option value="">Select model</option>
-                {models?.map((model: any) => (
-                  <option key={model.id} value={model.id}>
-                    {model?.attributes?.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <a
+                  href={network.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  <i
+                    className={`fab fa-${network.name.toLowerCase()} text-5xl text-${getNetworkColor(
+                      network.name
+                    )} mb-2`}
+                  ></i>
+                  <h3 className="text-lg font-semibold">{network.name}</h3>
+                </a>
+              </div>
+            ))}
           </div>
-        </form>
-      </div>
-      <br></br>
-      {!guideFetched && (
-        <div className="hidden sm:block ml-32">
-          <Image
-            src="https://friendtok.com/Screenshot%202023-10-21%20090932.png"
-            alt="Device"
-            height={700}
-            width={1000}
-            className="w-85 h-auto ps-50"
-          />
         </div>
-      )}
-      {guideFetched && (
-        <div className="mt-4 text-center">
-          <h1 className="text-4xl font-bold text-blue-500 animate-pulse">
-            <span className="transition-transform inline-block">
-              {selectedBrandName}
-            </span>{" "}
-            <span className="transition-transform inline-block">
-              {selectedModelName}
-            </span>
-          </h1>
-        </div>
-      )}
+      </main>
     </div>
   );
-}
+};
+
+const getNetworkColor = (networkName) => {
+  switch (networkName) {
+    case "Facebook":
+      return "blue-600";
+    case "Twitter":
+      return "blue-400";
+    case "LinkedIn":
+      return "indigo-600";
+    case "YouTube":
+      return "red-600";
+    default:
+      return "gray-500";
+  }
+};
+
+export default SocialNetworksHub;
