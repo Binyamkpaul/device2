@@ -1,82 +1,100 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaLinkedin,
+  FaYoutube,
+  FaEyeSlash,
+  FaEye,
+} from "react-icons/fa";
 
-const SocialNetworksHub: React.FC = () => {
+const SocialNetworksHub = () => {
   const [socialNetworks, setSocialNetworks] = useState([]);
+  const [showSocialNetworks, setShowSocialNetworks] = useState(false);
 
-  const fetchSocialNetworks = () => {
-    // Simulated data for social networks (replace with actual data fetching)
-    const socialNetworkData = [
-      { name: "Facebook", url: "https://www.facebook.com/yourcompany" },
-      { name: "Twitter", url: "https://www.twitter.com/yourcompany" },
-      { name: "LinkedIn", url: "https://www.linkedin.com/company/yourcompany" },
-      { name: "YouTube", url: "https://www.youtube.com/yourcompany" },
-    ];
-    setSocialNetworks(socialNetworkData);
+  const fetchSocialNetworks = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/sociallinks");
+      if (!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setSocialNetworks(data);
+      } else {
+        console.error("API response does not match the expected format:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching social networks: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSocialNetworks();
+  }, []);
+
+  const toggleSocialNetworks = () => {
+    setShowSocialNetworks(!showSocialNetworks);
   };
 
   return (
     <div>
-      <header className="bg-gray-900 text-white text-center py-4">
-        <h1 className="text-3xl font-semibold">Your Company Digital Hub</h1>
-      </header>
-      <nav className="bg-gray-700 text-center py-2">
-        <a
-          href="#social"
-          className="text-white text-lg font-medium px-4 hover:underline"
+      <header className="bg-white text-white text-center py-4">
+        <h1 className="text-2xl font-semibold text-lime-500">
+          Ethio telecom Digital Hub
+        </h1>
+        <button
+          className="text-black"
+          onClick={() => (window.location.href = "tel:*804#")}
         >
-          Social Networks
+          Call *804#
+        </button>
+        <a href="tel:*804#" className="hover:underline">
+          Call *804#
         </a>
-      </nav>
+      </header>
+
       <main className="p-4">
         <div className="container mx-auto" id="social">
-          <h2 className="text-2xl font-semibold mb-4">Social Networks</h2>
-          <button
-            onClick={fetchSocialNetworks}
-            className="bg-blue-500 text-white font-medium px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Social Networks
-          </button>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {socialNetworks.map((network, index) => (
-              <div
-                className="bg-white rounded-lg shadow p-4 text-center"
-                key={index}
-              >
-                <a
-                  href={network.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline"
+          <h4 className="text-1xl font-semibold mb-4">Social</h4>
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/4121/4121006.png"
+            alt="Toggle Social Networks"
+            className="cursor-pointer hover:text-blue-600 w-8 h-8"
+            onClick={toggleSocialNetworks}
+          />
+
+          {showSocialNetworks && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+              {socialNetworks.map((network) => (
+                <div
+                  className="bg-white rounded-lg shadow p-4 text-center"
+                  key={network.id}
                 >
-                  <i
-                    className={`fab fa-${network.name.toLowerCase()} text-5xl text-${getNetworkColor(
-                      network.name
-                    )} mb-2`}
-                  ></i>
-                  <h3 className="text-lg font-semibold">{network.name}</h3>
-                </a>
-              </div>
-            ))}
-          </div>
+                  <a
+                    href={network.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {network.image && (
+                      <img
+                        src={network.image}
+                        alt={network.name}
+                        className="w-12 h-12 mx-auto mb-2"
+                      />
+                    )}
+                    <h3 className="text-lg font-semibold">{network.name}</h3>
+                  </a>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>
   );
-};
-
-const getNetworkColor = (networkName) => {
-  switch (networkName) {
-    case "Facebook":
-      return "blue-600";
-    case "Twitter":
-      return "blue-400";
-    case "LinkedIn":
-      return "indigo-600";
-    case "YouTube":
-      return "red-600";
-    default:
-      return "gray-500";
-  }
 };
 
 export default SocialNetworksHub;

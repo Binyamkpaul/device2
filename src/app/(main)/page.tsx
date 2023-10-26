@@ -13,6 +13,8 @@ import Rating from "./rating";
 import RatingsView from "./RatingForm";
 import LattesModelsComponent from "@/components/LattesModelsComponent";
 import Nav from "@/components/common/Nav";
+import Ussd from "./ussd";
+import Website from "./website";
 
 export default function Home() {
   const title = "Find a solution for your Device ";
@@ -31,7 +33,10 @@ export default function Home() {
         {title}
       </h2>
       {/* <div className="container "> */}
+
       <SocialNetworksHub />
+      <Website />
+      <Ussd />
 
       {/* <Form /> */}
       {/* <GuidesCategories /> */}
