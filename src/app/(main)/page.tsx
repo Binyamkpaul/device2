@@ -15,6 +15,7 @@ import LattesModelsComponent from "@/components/LattesModelsComponent";
 import Nav from "@/components/common/Nav";
 import Ussd from "./ussd";
 import Website from "./website";
+import Chatbot from "./chatbot";
 
 export default function Home() {
   const title = "Find a solution for your Device ";
@@ -23,20 +24,26 @@ export default function Home() {
       {/* <SocialLinks /> */}
       {/* <TopNav /> */}
       <hr></hr>
-      <Navbar />
+      {/* <Navbar /> */}
       {/* <Nav /> */}
 
       <hr></hr>
       <br></br>
       <br></br>
       <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-center lg:ml-24 sm:ml-0">
-        {title}
+        {/* {title} */}
       </h2>
+      <br></br>
+      <br></br>
+
       {/* <div className="container "> */}
+      <Website />
 
       <SocialNetworksHub />
-      <Website />
+
       <Ussd />
+      <Chatbot />
+      {/* <h1> comment</h1> */}
 
       {/* <Form /> */}
       {/* <GuidesCategories /> */}
@@ -51,7 +58,7 @@ export default function Home() {
       <RatingsView /> */}
       {/* <StepList /> */}
       {/* <Steps /> */}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
