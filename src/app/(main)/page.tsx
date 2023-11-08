@@ -16,6 +16,12 @@ import Nav from "@/components/common/Nav";
 import Ussd from "./ussd";
 import Website from "./website";
 import Chatbot from "./chatbot";
+import Apps from "./app";
+import MyComponent from "./agent";
+import Sms from "./sms";
+import IVRComponent from "./ivr";
+import CallCenterComponent from "./call-center";
+import Livechat from "./livechat";
 
 export default function Home() {
   const title = "Find a solution for your Device ";
@@ -30,6 +36,8 @@ export default function Home() {
       <hr></hr>
       <br></br>
       <br></br>
+      <br></br>
+      <br></br>
       <h2 className="text-2xl font-bold tracking-tight text-gray-900 text-center lg:ml-24 sm:ml-0">
         {/* {title} */}
       </h2>
@@ -37,27 +45,20 @@ export default function Home() {
       <br></br>
 
       {/* <div className="container "> */}
-      <Website />
+      <div className="mx-2 border-lime-500 border-1 rounded-lg p-4">
+        <div className="grid grid-cols-3 gap-2">
+          <Chatbot />
+          <Apps />
+          <Website />
+          <Ussd />
+          <Sms />
+          <IVRComponent />
+          <SocialNetworksHub />
+          <CallCenterComponent />
+          <Livechat />
+        </div>
+      </div>
 
-      <SocialNetworksHub />
-
-      <Ussd />
-      <Chatbot />
-      {/* <h1> comment</h1> */}
-
-      {/* <Form /> */}
-      {/* <GuidesCategories /> */}
-      <GuidesList />
-      {/* <LattesModelsComponent /> */}
-
-      {/* </div> */}
-
-      {/* <AppScree-n /> */}
-      {/* <DeviceList /> */}
-      {/* <Rating />
-      <RatingsView /> */}
-      {/* <StepList /> */}
-      {/* <Steps /> */}
       {/* <Footer /> */}
     </>
   );

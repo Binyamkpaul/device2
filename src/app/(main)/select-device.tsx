@@ -5,6 +5,25 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Modal from "react-modal";
 
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
+  },
+  content: {
+    border: "2px solid #00C853",
+    borderRadius: "10px",
+    padding: "20px",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    maxHeight: "80vh", // Set a maximum height
+    overflowY: "auto", // Enable vertical scrolling if content exceeds the maximum height
+  },
+};
+
 const SocialNetworks: React.FC = () => {
   const [socialNetworks, setSocialNetworks] = useState([]);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -35,14 +54,10 @@ const SocialNetworks: React.FC = () => {
 
   const openShareModal = (networkName: string, link: string) => {
     setIsShareModalOpen(true);
-    setSelectedSocialNetwork(networkName);
-    setLinkToShare(link);
   };
 
   const closeShareModal = () => {
     setIsShareModalOpen(false);
-    setSelectedSocialNetwork("");
-    setLinkToShare("");
   };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,13 +72,16 @@ const SocialNetworks: React.FC = () => {
     <div>
       <main className="p-4">
         <div className="container mx-auto" id="social">
-          <h4 className="text-1xl font-semibold mb-4">Social Networks</h4>
           <img
-            src="https://cdn-icons-png.flaticon.com/512/3893/3893024.png"
+            src="http://localhost:1337/uploads/Asset_7_bb2f254203.svg"
             alt="Toggle Social Networks"
-            className="cursor-pointer hover:text-blue-600 w-8 h-8"
+            className="cursor-pointer hover:text-blue-600"
+            width="50" // Set the width to 70 pixels
+            height="20" // Set the height to 30 pixels
             onClick={() => setIsShareModalOpen(true)}
           />
+
+          <p>Social Media</p>
           <ToastContainer />
         </div>
       </main>
@@ -71,6 +89,7 @@ const SocialNetworks: React.FC = () => {
         isOpen={isShareModalOpen}
         onRequestClose={closeShareModal}
         contentLabel="Share Link"
+        style={customStyles} // Apply the custom styles here
       >
         <div className="flex items-center justify-between mb-4">
           <button onClick={closeShareModal}>
