@@ -39,14 +39,14 @@ export default function GuideItem({ guide, modelId }: any) {
           setGuideId(guide.id);
         }}
       >
-        <div className="flex items-center text-2xl  text-gray-900 text-center lg:ml-80 sm:ml-16">
+        <div className="flex items-center text-1xl font-bold  text-gray-900 text-center lg:ml-80 sm:ml-16">
           <AiOutlineMenu className="text-blue-500 text-xl mr-2" />
 
           {guide.attributes.question}
         </div>
       </button>
-      <hr className="lg:ml-72 lg:mr-72 sm:mr-72 sm:ml-16"></hr>
-      <br></br>
+      {/* <hr className="lg:ml-72 lg:mr-72 sm:mr-72 sm:ml-16"></hr> */}
+      {/* <br></br> */}
       {isSmallScreen ? (
         <>
           <div className="lg:ml-72">
@@ -165,7 +165,7 @@ export default function GuideItem({ guide, modelId }: any) {
             ))}
           </div>
           <div className="lg:w-1/2 pt-10">
-            <ol className="pl-8 font-bold mb-4">
+            <ol className="pl-8 text-1xl font-bold">
               {steps?.map((step: any, index: number) => (
                 <li
                   key={step.id}
