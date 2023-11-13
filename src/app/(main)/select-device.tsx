@@ -59,6 +59,24 @@ export function SelectDeviceForm() {
     }
   }, [modelId, models, brandId, brands]);
   const title = "Find a solution for your Device ";
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768); // Adjust the screen width as needed
+    };
+
+    // Add event listener to update screen size when the window is resized
+    window.addEventListener("resize", handleResize);
+
+    // Initial check on component mount
+    handleResize();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div
@@ -72,7 +90,13 @@ export function SelectDeviceForm() {
         {title}
       </h2>
 
-      <div className="mt-6 pt-4 bg-gray-100 border-2 border-gray-300 rounded-xl flex justify-center space-x-4 ml-32 mr-32">
+      <div
+        className={`mt-6 pt-4 ${
+          isSmallScreen ? "" : "bg-gray-100"
+        } rounded-xl flex justify-center space-x-4 ml-32 mr-32 ${
+          isSmallScreen ? "" : "border-2 border-gray-300"
+        }`}
+      >
         <div className="hidden sm:block">
           <Image
             src="https://friendtok.com/first_bg-removebg-preview.png"
