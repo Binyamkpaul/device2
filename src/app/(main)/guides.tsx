@@ -15,9 +15,11 @@ export default function GuidesList() {
   return (
     <div>
       <GuidesCategories
-        categoryNames={categoryNames}
         setSelectedCategory={setSelectedCategory}
+        categoryNames={categoryNames}
+        selectedCategory={selectedCategroy} // Make sure to provide this prop
       />
+
       {data?.categories?.[selectedCategroy]?.map((guide: any) => (
         <GuideItem key={guide.id} guide={guide} />
       ))}
