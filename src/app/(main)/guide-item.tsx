@@ -54,7 +54,7 @@ export default function GuideItem({ guide, modelId }: any) {
               <div key={step.id} onClick={() => setSelectedStepIndex(index)}>
                 {selectedStepIndex === index && (
                   <div className="my-4">
-                    <p className="text-center mt-2 text-2xl mb-2 ">
+                    <p className="text-3xl mt-2 mb-2">
                       {step.attributes.description}
                     </p>
                     {step?.attributes?.screenshot?.data?.attributes?.formats
@@ -165,7 +165,7 @@ export default function GuideItem({ guide, modelId }: any) {
             ))}
           </div>
           <div className="lg:w-1/2 pt-10">
-            <ol className="pl-8">
+            <ol className="pl-8 font-bold mb-4">
               {steps?.map((step: any, index: number) => (
                 <li
                   key={step.id}
